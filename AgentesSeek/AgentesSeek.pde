@@ -1,39 +1,25 @@
-PVector agent, target, agentCurrentVel;
+Agent agent, target;
+SteeringBehavior sb;
 
-
-void setup(){
-size(900,900);
- agent = new PVector(0,0);
-target = new PVector(0,0);
-agentCurrentVel = new PVector(0,0);
+void setup() {
+  size(900, 900);
+  agent = new Agent(new PVector(10, 10), 10, 5, 12, 5);
+  target = new Agent(new PVector(600/2, 600/2), 11, 6, 1, 3);
+  sb = new SteeringBehavior();
 }
-void draw(){
- background(25,150,97);
- seek();
- colorCaracter();
-}
-
-void seek(){
- float maxVel = 5, maxForce =2, mass = 20, maxSpeed = 10;
-PVector desireVel = PVector.sub(target,agent);
-desireVel.normalize();
-desireVel.mult(maxVel);
-PVector steering = PVector.sub(desireVel, agentCurrentVel);
-steering.limit(maxForce);
-steering.div(mass);
-agentCurrentVel.add(steering);
-agentCurrentVel.limit(maxSpeed);
-agent.add(agentCurrentVel);
+void draw() {
+  background(25, 150, 97);
+  sb.seek(agent, target);
+  sb.flee(target, agent);
+  colorCaracter();
 }
 
 
-
-void colorCaracter(){
-fill(230);
-circle(agent.x ,agent.y, 50);
-//target.x= mouseX;
-//target.y=mouseY;
-target = new PVector(mouseX,mouseY);
-fill(80);
-circle(target.x,target.y, 90);
+void colorCaracter() {
+  fill(230);
+  circle(agent.position.x, agent.position.y, 50);
+  //target.x= mouseX;
+  //target.y=mouseY;
+  fill(80);
+  circle(target.position.x, target.position.y, 90);
 }
