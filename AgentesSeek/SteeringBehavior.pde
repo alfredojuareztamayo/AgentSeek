@@ -1,19 +1,33 @@
 public class SteeringBehavior {
 
 
-  void seek(Agent agent, Agent target) {
+  PVector seek(Agent agent, PVector targetPos)
+  {
+    PVector desiredVel = PVector.sub(targetPos, agent.position);
+    desiredVel.normalize();
+    desiredVel.mult(agent.maxVelocity  );
+    PVector steering = PVector.sub(desiredVel, agent.currentVel);
+    steering.limit(agent.maxForce);
+    steering.div(agent.mass);
+    return steering;
+  }
 
-    agent.desiredVel = PVector.sub(target.position, agent.position );
-    agent.desiredVel.normalize();
-    agent.desiredVel.mult(agent.maxVelocity);
-    agent.steering = PVector.sub(agent.desiredVel, agent.currentVel);
-    agent.steering.limit(agent.maxForce);
-    agent.steering.div(agent.mass);
-    agent.currentVel.add(agent.steering);
+  PVector flee(Agent agent, PVector targetPos)
+  {
+   //a PVector targetTmp = PVector.mult(targetPos, -1);
+    return PVector.mult(seek(agent, targetPos), -1);
+  }
+
+  void applyForce(Agent agent, PVector steering)
+  {
+    agent.currentVel.add(steering);
     agent.currentVel.limit(agent.maxSpeed);
     agent.position.add(agent.currentVel);
   }
-  void flee(Agent agent, Agent target) {
-    seek(target, agent);
+  /*
+  void movementManager()
+  {
+
   }
+  */
 }//end Class SteeringBehavior
