@@ -14,20 +14,25 @@ public class SteeringBehavior {
 
   PVector flee(Agent agent, PVector targetPos)
   {
-   //a PVector targetTmp = PVector.mult(targetPos, -1);
+    //a PVector targetTmp = PVector.mult(targetPos, -1);
     return PVector.mult(seek(agent, targetPos), -1);
   }
 
+  PVector wander(Agent agent) {
+    PVector desiredVel = new PVector(agent.currentVel.x, agent.currentVel.y);
+    desiredVel.normalize();
+    desiredVel.mult(80);
+    desiredVel.add(agent.position);
+    PVector randomWheel = new PVector(random(-1, 1), random(-1, 1));
+    randomWheel.normalize();
+    randomWheel.mult(40);
+    randomWheel.add(desiredVel);
+    return randomWheel;
+  }
   void applyForce(Agent agent, PVector steering)
   {
     agent.currentVel.add(steering);
     agent.currentVel.limit(agent.maxSpeed);
     agent.position.add(agent.currentVel);
   }
-  /*
-  void movementManager()
-  {
-
-  }
-  */
 }//end Class SteeringBehavior

@@ -1,12 +1,12 @@
 Agent agent, target;
-SteeringBehavior sb;
+//SteeringBehavior sb;
 float color1 = 123, color2= 234;
 void setup()
 {
   size(900, 900);
   agent = new Agent(new PVector(width/2, height/2), 3, 2, 1, 13);
   target = new Agent(new PVector(100, 0), 4, 3, 1, 25);
-  sb = new SteeringBehavior();
+  //sb = new SteeringBehavior();
  // noStroke();
   colorMode(HSB, 360, 100, 100);
 }
@@ -19,8 +19,8 @@ void draw()
   //circle(agent.position.x, agent.position.y, 30);
   // target.position = new PVector(mouseX, mouseY);
   //PVector fleeForce = sb.flee(agent, target.position);
-  sb.applyForce(target, sb.seek(target, agent.position));
-  sb.applyForce(agent, sb.flee(agent, target.position));
+  //sb.applyForce(target, sb.seek(target, agent.position));
+  //sb.applyForce(agent, sb.flee(agent, target.position));
 
   //fill(50);
   //circle(target.position.x, target.position.y, 50);
